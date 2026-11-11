@@ -27,7 +27,6 @@ fn main() {
         println!("cargo:rustc-link-lib=winmm");
         println!("cargo:rustc-link-lib=advapi32");
     } else if target_os == "macos" || target_os == "ios" {
-        build.flag("-x").flag("objective-c");
         println!("cargo:rustc-link-lib=framework=CoreAudio");
         println!("cargo:rustc-link-lib=framework=AudioToolbox");
         println!("cargo:rustc-link-lib=framework=CoreFoundation");
