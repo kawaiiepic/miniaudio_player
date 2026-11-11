@@ -26,11 +26,16 @@ fn main() {
         println!("cargo:rustc-link-lib=ole32");
         println!("cargo:rustc-link-lib=winmm");
         println!("cargo:rustc-link-lib=advapi32");
-    } else if target_os == "macos" || target_os == "ios" {
-        println!("cargo:rustc-link-lib=framework=CoreAudio");
-        println!("cargo:rustc-link-lib=framework=AudioToolbox");
-        println!("cargo:rustc-link-lib=framework=CoreFoundation");
-    }
+   } else if target_os == "macos" || target_os == "ios" {
+       println!("cargo:rustc-link-lib=framework=CoreAudio");
+       println!("cargo:rustc-link-lib=framework=AudioToolbox");
+       println!("cargo:rustc-link-lib=framework=CoreFoundation");
+       if target_os == "ios" {
+           build.flag("-x").flag("objective-c");
+           println!("cargo:rustc-link-lib=framework=Foundation");
+           println!("cargo:rustc-link-lib=framework=AVFoundation");
+       }
+   }
 
     build.compile("miniaudio_bridge");
     println!("cargo:rerun-if-changed=c_src/miniaudio_device_bridge.c");
